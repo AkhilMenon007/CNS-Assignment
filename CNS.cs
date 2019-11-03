@@ -4,12 +4,14 @@ using System.Text;
 using System;
 using System.Numerics;
 
-
-
 public static class CNS
 {
     public const int RSA_SIZE = 2048;
-    public static void Test()
+
+    /// <summary>
+    /// This function acts as a test for the mechanism by send a message hello and verifying its receiver and printing the message
+    /// </summary>
+    public static void TestRun()
     {
         RSAParameters parameters;
 
@@ -43,7 +45,6 @@ public static class CNS
     public static string GenerateMessage(string message,RSAParameters privateRSAKey,string DESKey,string DESIV) 
     {
         BigInteger h = ComputeSHAHash(message);
-        WriteLine("SentHash : " + GetString64(h));
         h = RSAExponentiate(h, privateRSAKey.D, privateRSAKey.Modulus);
         string concat = message.Length + " " + message + GetString64(h);
 
@@ -67,11 +68,9 @@ public static class CNS
             return false;
         }
         message = concat.Substring(msgLengthIndex + 1, len);
-        WriteLine(message);
         string cryptHash = concat.Substring(msgLengthIndex + len + 1);
 
         BigInteger hash =RSAExponentiate(new BigInteger(Convert.FromBase64String(cryptHash)), publicRSAKey.Exponent, publicRSAKey.Modulus);
-        WriteLine("ReceivedHash : " + GetString64(hash));
         
         if (ComputeSHAHash(message) != hash) 
         {
