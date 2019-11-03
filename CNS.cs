@@ -4,14 +4,20 @@ using System.Text;
 using System;
 using System.Numerics;
 
+
+
 public static class CNS
 {
     public const int RSA_SIZE = 2048;
     public static void Test()
     {
-        RSAParameters parameters = GenerateRSAParameters();
+        RSAParameters parameters;
+
+        RSAParameters publicParameters;
+
         RSACryptoServiceProvider encrypt = new RSACryptoServiceProvider(RSA_SIZE);
         parameters = encrypt.ExportParameters(true);
+        publicParameters = encrypt.ExportParameters(false);
 
         DESCryptoServiceProvider dESCryptoServiceProvider = new DESCryptoServiceProvider();
         dESCryptoServiceProvider.GenerateKey();
@@ -21,8 +27,14 @@ public static class CNS
         string IV = Convert.ToBase64String(dESCryptoServiceProvider.IV);
 
         string msg = GenerateMessage("Hello", parameters, key, IV);
+        WriteLine("Encrypted message to be sent : "+msg);
 
-        ReproduceMessage(msg, out msg, parameters, key, IV);
+        if (ReproduceMessage(msg, out msg, parameters, key, IV)) 
+        {
+            WriteLine("Successfully verified message with sender and message received is  : "+msg);
+        }
+        else
+            WriteLine("Failed to verify sender identity");
 
     }
 
@@ -31,6 +43,7 @@ public static class CNS
     public static string GenerateMessage(string message,RSAParameters privateRSAKey,string DESKey,string DESIV) 
     {
         BigInteger h = ComputeSHAHash(message);
+        WriteLine("SentHash : " + GetString64(h));
         h = RSAExponentiate(h, privateRSAKey.D, privateRSAKey.Modulus);
         string concat = message.Length + " " + message + GetString64(h);
 
@@ -49,15 +62,17 @@ public static class CNS
         int len;
         if(!int.TryParse(msgLength, out len)) 
         {
-            Console.WriteLine("Invalid message recieved");
+            WriteLine("Invalid message recieved");
             message = "";
             return false;
         }
         message = concat.Substring(msgLengthIndex + 1, len);
+        WriteLine(message);
         string cryptHash = concat.Substring(msgLengthIndex + len + 1);
 
-        BigInteger hash=RSAExponentiate(new BigInteger(Convert.FromBase64String(cryptHash)), publicRSAKey.Exponent, publicRSAKey.Modulus);
-
+        BigInteger hash =RSAExponentiate(new BigInteger(Convert.FromBase64String(cryptHash)), publicRSAKey.Exponent, publicRSAKey.Modulus);
+        WriteLine("ReceivedHash : " + GetString64(hash));
+        
         if (ComputeSHAHash(message) != hash) 
         {
             return false;
@@ -69,6 +84,12 @@ public static class CNS
     #endregion
 
     #region Helpers
+
+    public static void WriteLine(object obj) 
+    {
+        UnityEngine.Debug.Log(obj);
+    }
+
     public static byte[] StringToByte(string input)
     {
         return Encoding.Unicode.GetBytes(input);
