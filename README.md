@@ -14,6 +14,8 @@ The receiver uses the secret DES key to decrypt the incoming message. This is th
 The *encrypted* hash is then *decrypted* using the public key of RSA to get the hash of the message.
 The message is confirmed to be authentic if the decrypted value matches the actual hash of the message.
 
+This mechanism provides **Confidentiality** with the DES along with **Authenticity** with the help of digital signature.
+
 ![Question](https://github.com/AkhilMenon007/CNS-Assignment/blob/master/CNS_ProgrammingAssignment/Question.PNG)
 
 ### **Solution :**
