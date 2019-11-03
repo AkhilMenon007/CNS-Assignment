@@ -32,7 +32,7 @@ In the repository you may find a file named [CNS.cs](https://github.com/AkhilMen
 **Additional Information :**
 The assignment is solved using C# System.Security.Cryptography implementation of RSA,DES and SHA1. The following points are specific for using this :
 
- - **RSAParameters** : This is returned from **GenerateRSAParameters** method and contains both the private and public part of the key. The public part of the key being used will be the **Exponent** and **Modulus** fields of the type while the private part being used will be **D** and **Modulus**. These public part is to be sent to receiver and **NOT** the entire object.
+ - **RSAParameters** : This is returned from **ExportParameters** method and contains both the private and public part of the key or just the public part depending on if the parameter to ExportParameters. It will have both the private and public part if true is passed to ExportParameters and just the public part otherwise. Only the **public part** of the key is to be sent to the receiver. The **private part** is used for encrypting the hash.
  
  - **BigInteger** : The RSA exponentiation for encryption and decryption are done using the **ModPow** method of the **BigInteger** struct of C# which stores the values in *Big-Endian* representation whilst the values obtained from RSA Parameters are all in *Little-Endian* representation as an array of bytes. The conversion between the 2 representations is handled by **GetBigInt** helper method which converts the Little-Endian byte array to Big-Endian array with a 0 byte at the MSB representing unsigned BigInteger.
  
