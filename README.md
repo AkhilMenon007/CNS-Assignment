@@ -13,7 +13,7 @@ The message is confirmed to be authentic if the decrypted value matches the actu
 
 ![Question](https://github.com/AkhilMenon007/CNS-Assignment/blob/master/CNS_ProgrammingAssignment/Question.PNG)
 
-**Solution**
+**Solution :**
 
 In the repository you may find a file named [CNS.cs](https://github.com/AkhilMenon007/CNS-Assignment/blob/master/CNS.cs) which is a static class which can be used for achieving the solution to the problem. Within the class are the following static functions which solves the problem with the help of in built C# functions  : 
 
