@@ -1,6 +1,6 @@
 ## Cryptography and Network Security Assignment
 
-**Question :**
+### **Question :**
 
 The question is to to create a system which provides a message sending service which guarentees the source to be a valid one with digital signature. A symmetric Key encryption technique of **[DES](https://en.wikipedia.org/wiki/Data_Encryption_Standard)** is used to encrypt the digitally signed message. The same system may be used for authentication of an entity.
 **[SHA1](https://en.wikipedia.org/wiki/SHA-1)** is used to hash the message which is used as a part of signature.
@@ -13,7 +13,7 @@ The message is confirmed to be authentic if the decrypted value matches the actu
 
 ![Question](https://github.com/AkhilMenon007/CNS-Assignment/blob/master/CNS_ProgrammingAssignment/Question.PNG)
 
-**Solution**
+### **Solution :**
 
 In the repository you may find a file named [CNS.cs](https://github.com/AkhilMenon007/CNS-Assignment/blob/master/CNS.cs) which is a static class which can be used for achieving the solution to the problem. Within the class are the following static functions which solves the problem with the help of in built C# functions  : 
 
@@ -29,7 +29,8 @@ In the repository you may find a file named [CNS.cs](https://github.com/AkhilMen
  
  - **DecryptWithDES** : Decrypts the **message** with given **Key** and **Initial Vector**.
 
-**Additional Information :**
+### **Additional Information :**
+
 The assignment is solved using C# System.Security.Cryptography implementation of RSA,DES and SHA1. The following points are specific for using this :
 
  - **RSAParameters** : This is returned from **ExportParameters** method and contains both the private and public part of the key or just the public part depending on if the parameter to ExportParameters. It will have both the private and public part if true is passed to ExportParameters and just the public part otherwise. Only the **public part** of the key is to be sent to the receiver. The **private part** is used for encrypting the hash.
