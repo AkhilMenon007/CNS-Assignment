@@ -1,3 +1,4 @@
+
 ## Cryptography and Network Security Assignment
 
 ### **Question :**
@@ -30,6 +31,14 @@ In the repository you may find a file named [CNS.cs](https://github.com/AkhilMen
  - **EncryptWithDES** : Encrypts the **message** with given **Key** and **Initial Vector**.
  
  - **DecryptWithDES** : Decrypts the **message** with given **Key** and **Initial Vector**.
+
+### **Application**
+
+The provided solution is used to verify the authenticity of the message, that is , to confirm that the message was sent from a source who is trusted. The mechanism will work even if the symmetric key is compromised when being sent somehow as the encrypted hash can be decrypted only with the private key of the sender.
+
+This guarentees that even if a person sends a message with their own hash , the receiver can confirm this to be a source which cannot be trusted.
+
+
 
 ### **Additional Information :**
 
